@@ -76,6 +76,24 @@ export class QBittorrent {
     })
   }
 
+  async pause(torrentHashes: string[]): Promise<void> {
+    await this.fetchAPI('/api/v2/torrents/pause', {
+      queryParams: {
+        hashes: torrentHashes.join('|'),
+      },
+      returns: false,
+    })
+  }
+
+  async resume(torrentHashes: string[]): Promise<void> {
+    await this.fetchAPI('/api/v2/torrents/resume', {
+      queryParams: {
+        hashes: torrentHashes.join('|'),
+      },
+      returns: false,
+    })
+  }
+
   private async fetchAPI(path: string, options?: RequestInit & { queryParams?: Record<string, string>, returns?: boolean }): Promise<any> {
     const {queryParams, returns = true, ...rest}  = options ?? {}
 
