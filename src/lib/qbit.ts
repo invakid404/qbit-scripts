@@ -67,18 +67,31 @@ export class QBittorrent {
     return this.fetchAPI('/api/v2/torrents/info', {queryParams: options})
   }
 
-  private async fetchAPI(path: string, options?: RequestInit & { queryParams?: Record<string, string> }): Promise<any> {
-    const {queryParams, ...rest}  = options ?? {}
+  async moveToBottom(torrentHashes: string[]): Promise<void> {
+    await this.fetchAPI('/api/v2/torrents/bottomPrio', {
+      queryParams: {
+        hashes: torrentHashes.join('|'),
+      },
+      returns: false,
+    })
+  }
+
+  private async fetchAPI(path: string, options?: RequestInit & { queryParams?: Record<string, string>, returns?: boolean }): Promise<any> {
+    const {queryParams, returns = true, ...rest}  = options ?? {}
 
     const url = new URL(path, this.host)
     queryParams && (url.search = Object.entries(queryParams).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&'))
 
-    return fetch(url.href, {
-      ...options,
+    const response = await fetch(url.href, {
+      ...rest,
       headers: {
         ...options?.headers,
         Authorization: this.authHeader,
       },
-    }).then(res => res.json()).then(data => toCamelCase(data))
+    })
+
+    if (returns) {
+      return response.json().then((data => toCamelCase(data)))
+    }
   }
 }
