@@ -20,6 +20,7 @@
     "@oclif/core": "^1.19.1",
     "@oclif/plugin-help": "^5",
     "@oclif/plugin-plugins": "^2.1.4",
+    "dayjs": "^1.11.6",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
