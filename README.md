@@ -1,5 +1,4 @@
-oclif-hello-world
-=================
+# oclif-hello-world
 
 oclif example Hello World CLI
 
@@ -10,11 +9,15 @@ oclif example Hello World CLI
 [![License](https://img.shields.io/npm/l/oclif-hello-world.svg)](https://github.com/oclif/hello-world/blob/main/package.json)
 
 <!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
+
 # Usage
+
 <!-- usage -->
+
 ```sh-session
 $ npm install -g qbit-scripts
 $ qbit-scripts COMMAND
@@ -26,21 +29,25 @@ USAGE
   $ qbit-scripts COMMAND
 ...
 ```
+
 <!-- usagestop -->
+
 # Commands
+
 <!-- commands -->
-* [`qbit-scripts hello PERSON`](#qbit-scripts-hello-person)
-* [`qbit-scripts hello world`](#qbit-scripts-hello-world)
-* [`qbit-scripts help [COMMAND]`](#qbit-scripts-help-command)
-* [`qbit-scripts plugins`](#qbit-scripts-plugins)
-* [`qbit-scripts plugins:install PLUGIN...`](#qbit-scripts-pluginsinstall-plugin)
-* [`qbit-scripts plugins:inspect PLUGIN...`](#qbit-scripts-pluginsinspect-plugin)
-* [`qbit-scripts plugins:install PLUGIN...`](#qbit-scripts-pluginsinstall-plugin-1)
-* [`qbit-scripts plugins:link PLUGIN`](#qbit-scripts-pluginslink-plugin)
-* [`qbit-scripts plugins:uninstall PLUGIN...`](#qbit-scripts-pluginsuninstall-plugin)
-* [`qbit-scripts plugins:uninstall PLUGIN...`](#qbit-scripts-pluginsuninstall-plugin-1)
-* [`qbit-scripts plugins:uninstall PLUGIN...`](#qbit-scripts-pluginsuninstall-plugin-2)
-* [`qbit-scripts plugins update`](#qbit-scripts-plugins-update)
+
+- [`qbit-scripts hello PERSON`](#qbit-scripts-hello-person)
+- [`qbit-scripts hello world`](#qbit-scripts-hello-world)
+- [`qbit-scripts help [COMMAND]`](#qbit-scripts-help-command)
+- [`qbit-scripts plugins`](#qbit-scripts-plugins)
+- [`qbit-scripts plugins:install PLUGIN...`](#qbit-scripts-pluginsinstall-plugin)
+- [`qbit-scripts plugins:inspect PLUGIN...`](#qbit-scripts-pluginsinspect-plugin)
+- [`qbit-scripts plugins:install PLUGIN...`](#qbit-scripts-pluginsinstall-plugin-1)
+- [`qbit-scripts plugins:link PLUGIN`](#qbit-scripts-pluginslink-plugin)
+- [`qbit-scripts plugins:uninstall PLUGIN...`](#qbit-scripts-pluginsuninstall-plugin)
+- [`qbit-scripts plugins:uninstall PLUGIN...`](#qbit-scripts-pluginsuninstall-plugin-1)
+- [`qbit-scripts plugins:uninstall PLUGIN...`](#qbit-scripts-pluginsuninstall-plugin-2)
+- [`qbit-scripts plugins update`](#qbit-scripts-plugins-update)
 
 ## `qbit-scripts hello PERSON`
 
@@ -153,7 +160,7 @@ ALIASES
   $ qbit-scripts plugins add
 
 EXAMPLES
-  $ qbit-scripts plugins:install myplugin 
+  $ qbit-scripts plugins:install myplugin
 
   $ qbit-scripts plugins:install https://github.com/someuser/someplugin
 
@@ -213,7 +220,7 @@ ALIASES
   $ qbit-scripts plugins add
 
 EXAMPLES
-  $ qbit-scripts plugins:install myplugin 
+  $ qbit-scripts plugins:install myplugin
 
   $ qbit-scripts plugins:install https://github.com/someuser/someplugin
 
@@ -331,4 +338,5 @@ FLAGS
 DESCRIPTION
   Update installed plugins.
 ```
+
 <!-- commandsstop -->

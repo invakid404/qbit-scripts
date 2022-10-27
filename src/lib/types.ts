@@ -7,4 +7,6 @@ type CamelCaseRec<Value extends string> =
 
 export type CamelCase<S extends string> = Uncapitalize<CamelCaseRec<S>>;
 
-export type ToCamelCase<T> = { [Key in keyof T as Key extends string ? CamelCase<Key> : never]: T[Key] }
+export type ToCamelCase<T> = {
+  [Key in keyof T as Key extends string ? CamelCase<Key> : never]: T[Key];
+};
