@@ -2,6 +2,12 @@ import {ToCamelCase} from './types'
 import {encode} from './encoding'
 import {toCamelCase} from './case'
 
+export type TorrentListFilter = 'all' | 'downloading' | 'seeding' | 'completed' | 'paused' | 'active' | 'inactive' | 'resumed' | 'stalled' | 'stalled_uploading' | 'stalled_downloading' | 'errored'
+
+export type GetTorrentListOptions = {
+  filter?: TorrentListFilter
+}
+
 export type Torrent = ToCamelCase<{
   added_on: number
   amount_left: number
@@ -57,12 +63,17 @@ export class QBittorrent {
     this.authHeader = `Basic ${encode([username, password].join(':'), 'base64')}`
   }
 
-  async getTorrentList(): Promise<Torrent[]> {
-    return this.fetchAPI('/api/v2/torrents/info')
+  async getTorrentList(options?: GetTorrentListOptions): Promise<Torrent[]> {
+    return this.fetchAPI('/api/v2/torrents/info', {queryParams: options})
   }
 
-  private async fetchAPI(path: string, options?: RequestInit): Promise<any> {
-    return fetch(new URL(path, this.host), {
+  private async fetchAPI(path: string, options?: RequestInit & { queryParams?: Record<string, string> }): Promise<any> {
+    const {queryParams, ...rest}  = options ?? {}
+
+    const url = new URL(path, this.host)
+    queryParams && (url.search = Object.entries(queryParams).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&'))
+
+    return fetch(url.href, {
       ...options,
       headers: {
         ...options?.headers,
