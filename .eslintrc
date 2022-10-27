@@ -1,8 +1,5 @@
 {
-  "extends": [
-    "oclif",
-    "oclif-typescript"
-  ],
+  "extends": ["oclif", "oclif-typescript", "plugin:prettier/recommended"],
   "rules": {
     "camelcase": "off"
   }
