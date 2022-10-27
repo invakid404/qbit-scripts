@@ -43,6 +43,10 @@ export default class UnclogQueue extends Command {
 
     this.log(`Found ${torrentHashesToMove.length} torrent(s) that are clogging the queue`)
 
+    if (torrentHashesToMove.length === 0) {
+      return
+    }
+
     this.log('Moving torrent(s) to the end of the queue...')
     await qbitAPI.moveToBottom(torrentHashesToMove)
 
