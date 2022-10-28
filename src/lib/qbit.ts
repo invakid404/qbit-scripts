@@ -68,6 +68,25 @@ export type Torrent = ToCamelCase<{
   upspeed: number;
 }>;
 
+export enum TrackerStatus {
+  Disabled = 0,
+  NotContacted = 1,
+  Working = 2,
+  Updating = 3,
+  NotWorking = 4,
+}
+
+export type TrackerInfo = ToCamelCase<{
+  url: string;
+  status: TrackerStatus;
+  tier: number;
+  num_peers: number;
+  num_seeds: number;
+  num_leeches: number;
+  num_downloaded: number;
+  msg: string;
+}>;
+
 export class QBittorrent {
   private readonly authHeader: string;
 
@@ -84,6 +103,12 @@ export class QBittorrent {
 
   async getTorrentList(options?: GetTorrentListOptions): Promise<Torrent[]> {
     return this.fetchAPI('/api/v2/torrents/info', { queryParams: options });
+  }
+
+  async getTrackers(torrentHash: string): Promise<TrackerInfo[]> {
+    return this.fetchAPI('/api/v2/torrents/trackers', {
+      queryParams: { hash: torrentHash },
+    });
   }
 
   async moveToBottom(torrentHashes: string[]): Promise<void> {
