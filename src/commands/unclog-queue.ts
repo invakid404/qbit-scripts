@@ -1,5 +1,5 @@
 import { Command, Flags } from '@oclif/core';
-import { QBittorrent } from '../lib/qbit';
+import { QBittorrent, TrackerStatus } from '../lib/qbit';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
@@ -45,11 +45,24 @@ export default class UnclogQueue extends Command {
 
     this.log(`Found ${stalledTorrentsList.length} stalled torrent(s)`);
 
+    this.log(
+      `Fetching tracker info for ${stalledTorrentsList.length} torrent(s)`,
+    );
+
+    const torrentsWithTrackerInfo = await Promise.all(
+      stalledTorrentsList.map(async (torrent) => {
+        return {
+          ...torrent,
+          trackers: await qbitAPI.getTrackers(torrent.hash),
+        };
+      }),
+    );
+
     const threshold = dayjs.duration(time, 'minutes');
     const inactivityDate = dayjs().subtract(threshold);
 
-    const torrentHashesToMove = stalledTorrentsList
-      .filter(({ lastActivity, timeActive }) => {
+    const inactiveTorrents = stalledTorrentsList.filter(
+      ({ lastActivity, timeActive }) => {
         const lastActivityDate = dayjs.unix(lastActivity);
         const timeActiveDuration = dayjs.duration(timeActive, 'seconds');
 
@@ -57,8 +70,30 @@ export default class UnclogQueue extends Command {
           lastActivityDate.isBefore(inactivityDate) &&
           threshold.asSeconds() <= timeActiveDuration.asSeconds()
         );
-      })
-      .map(({ hash }) => hash);
+      },
+    );
+
+    const torrentsWithNoSeeders = torrentsWithTrackerInfo.filter((torrent) => {
+      const isFullyUpdated = torrent.trackers.every(
+        ({ numSeeds }) => numSeeds !== -1,
+      );
+      if (!isFullyUpdated) {
+        return false;
+      }
+
+      const totalSeeders = torrent.trackers.reduce(
+        (acc, tracker) => acc + tracker.numSeeds,
+        0,
+      );
+
+      return totalSeeders === 0;
+    });
+
+    const torrentHashesToMove = [
+      ...new Set(
+        [...inactiveTorrents, ...torrentsWithNoSeeders].map(({ hash }) => hash),
+      ),
+    ];
 
     this.log(
       `Found ${torrentHashesToMove.length} torrent(s) that are clogging the queue`,
