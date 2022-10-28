@@ -1,23 +1,15 @@
-# oclif-hello-world
+# qbit-scripts
 
-oclif example Hello World CLI
-
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/oclif-hello-world.svg)](https://npmjs.org/package/oclif-hello-world)
-[![CircleCI](https://circleci.com/gh/oclif/hello-world/tree/main.svg?style=shield)](https://circleci.com/gh/oclif/hello-world/tree/main)
-[![Downloads/week](https://img.shields.io/npm/dw/oclif-hello-world.svg)](https://npmjs.org/package/oclif-hello-world)
-[![License](https://img.shields.io/npm/l/oclif-hello-world.svg)](https://github.com/oclif/hello-world/blob/main/package.json)
+CLI for automating various qBittorrent tasks.
 
 <!-- toc -->
-
-- [Usage](#usage)
-- [Commands](#commands)
+* [Usage](#usage)
+* [Commands](#commands)
 <!-- tocstop -->
 
 # Usage
 
 <!-- usage -->
-
 ```sh-session
 $ npm install -g qbit-scripts
 $ qbit-scripts COMMAND
@@ -29,65 +21,22 @@ USAGE
   $ qbit-scripts COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 # Commands
 
 <!-- commands -->
-
-- [`qbit-scripts hello PERSON`](#qbit-scripts-hello-person)
-- [`qbit-scripts hello world`](#qbit-scripts-hello-world)
-- [`qbit-scripts help [COMMAND]`](#qbit-scripts-help-command)
-- [`qbit-scripts plugins`](#qbit-scripts-plugins)
-- [`qbit-scripts plugins:install PLUGIN...`](#qbit-scripts-pluginsinstall-plugin)
-- [`qbit-scripts plugins:inspect PLUGIN...`](#qbit-scripts-pluginsinspect-plugin)
-- [`qbit-scripts plugins:install PLUGIN...`](#qbit-scripts-pluginsinstall-plugin-1)
-- [`qbit-scripts plugins:link PLUGIN`](#qbit-scripts-pluginslink-plugin)
-- [`qbit-scripts plugins:uninstall PLUGIN...`](#qbit-scripts-pluginsuninstall-plugin)
-- [`qbit-scripts plugins:uninstall PLUGIN...`](#qbit-scripts-pluginsuninstall-plugin-1)
-- [`qbit-scripts plugins:uninstall PLUGIN...`](#qbit-scripts-pluginsuninstall-plugin-2)
-- [`qbit-scripts plugins update`](#qbit-scripts-plugins-update)
-
-## `qbit-scripts hello PERSON`
-
-Say hello
-
-```
-USAGE
-  $ qbit-scripts hello [PERSON] -f <value>
-
-ARGUMENTS
-  PERSON  Person to say hello to
-
-FLAGS
-  -f, --from=<value>  (required) Who is saying hello
-
-DESCRIPTION
-  Say hello
-
-EXAMPLES
-  $ oex hello friend --from oclif
-  hello friend from oclif! (./src/commands/hello/index.ts)
-```
-
-_See code: [dist/commands/hello/index.ts](https://github.com/invakid404/qbit-scripts/blob/v0.0.0/dist/commands/hello/index.ts)_
-
-## `qbit-scripts hello world`
-
-Say hello world
-
-```
-USAGE
-  $ qbit-scripts hello world
-
-DESCRIPTION
-  Say hello world
-
-EXAMPLES
-  $ qbit-scripts hello world
-  hello world! (./src/commands/hello/world.ts)
-```
+* [`qbit-scripts help [COMMAND]`](#qbit-scripts-help-command)
+* [`qbit-scripts plugins`](#qbit-scripts-plugins)
+* [`qbit-scripts plugins:install PLUGIN...`](#qbit-scripts-pluginsinstall-plugin)
+* [`qbit-scripts plugins:inspect PLUGIN...`](#qbit-scripts-pluginsinspect-plugin)
+* [`qbit-scripts plugins:install PLUGIN...`](#qbit-scripts-pluginsinstall-plugin-1)
+* [`qbit-scripts plugins:link PLUGIN`](#qbit-scripts-pluginslink-plugin)
+* [`qbit-scripts plugins:uninstall PLUGIN...`](#qbit-scripts-pluginsuninstall-plugin)
+* [`qbit-scripts plugins:uninstall PLUGIN...`](#qbit-scripts-pluginsuninstall-plugin-1)
+* [`qbit-scripts plugins:uninstall PLUGIN...`](#qbit-scripts-pluginsuninstall-plugin-2)
+* [`qbit-scripts plugins update`](#qbit-scripts-plugins-update)
+* [`qbit-scripts unclog-queue`](#qbit-scripts-unclog-queue)
 
 ## `qbit-scripts help [COMMAND]`
 
@@ -160,7 +109,7 @@ ALIASES
   $ qbit-scripts plugins add
 
 EXAMPLES
-  $ qbit-scripts plugins:install myplugin
+  $ qbit-scripts plugins:install myplugin 
 
   $ qbit-scripts plugins:install https://github.com/someuser/someplugin
 
@@ -220,7 +169,7 @@ ALIASES
   $ qbit-scripts plugins add
 
 EXAMPLES
-  $ qbit-scripts plugins:install myplugin
+  $ qbit-scripts plugins:install myplugin 
 
   $ qbit-scripts plugins:install https://github.com/someuser/someplugin
 
@@ -339,4 +288,26 @@ DESCRIPTION
   Update installed plugins.
 ```
 
+## `qbit-scripts unclog-queue`
+
+move stalled torrents to the end of the queue
+
+```
+USAGE
+  $ qbit-scripts unclog-queue -h <value> -u <value> -p <value> [-t <value>]
+
+FLAGS
+  -h, --host=<value>       (required) qbit host
+  -p, --password=<value>   (required) qbit password
+  -t, --threshold=<value>  [default: 1h] min active time to be considered stalled
+  -u, --username=<value>   (required) qbit username
+
+DESCRIPTION
+  move stalled torrents to the end of the queue
+
+EXAMPLES
+  $ qbit-scripts unclog-queue -h https://qbit.example.com -u admin -p adminadmin
+```
+
+_See code: [dist/commands/unclog-queue.ts](https://github.com/invakid404/qbit-scripts/blob/v0.0.0/dist/commands/unclog-queue.ts)_
 <!-- commandsstop -->
