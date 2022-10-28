@@ -1,10 +1,7 @@
 import { Command, Flags } from '@oclif/core';
-import { QBittorrent, TrackerStatus } from '../lib/qbit';
+import { QBittorrent } from '../lib/qbit';
 import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
 import { durationFlag } from '../lib/flags';
-
-dayjs.extend(duration);
 
 export default class UnclogQueue extends Command {
   static description = 'move stalled torrents to the end of the queue';
