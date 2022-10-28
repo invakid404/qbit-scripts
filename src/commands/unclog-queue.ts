@@ -2,6 +2,7 @@ import { Command, Flags } from '@oclif/core';
 import { QBittorrent, TrackerStatus } from '../lib/qbit';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+import { durationFlag } from '../lib/flags';
 
 dayjs.extend(duration);
 
@@ -24,16 +25,17 @@ export default class UnclogQueue extends Command {
       description: 'qbit password',
       required: true,
     }),
-    time: Flags.integer({
+    threshold: durationFlag({
       char: 't',
-      description: 'min active time to be considered stalled (in minutes)',
-      default: 60,
+      description: 'min active time to be considered stalled',
+      default: dayjs.duration(1, 'hour'),
+      defaultHelp: async () => '1h',
     }),
   };
 
   public async run(): Promise<void> {
     const {
-      flags: { host, username, password, time },
+      flags: { host, username, password, threshold },
     } = await this.parse(UnclogQueue);
 
     const qbitAPI = new QBittorrent(host, username, password);
@@ -58,7 +60,6 @@ export default class UnclogQueue extends Command {
       }),
     );
 
-    const threshold = dayjs.duration(time, 'minutes');
     const inactivityDate = dayjs().subtract(threshold);
 
     const inactiveTorrents = stalledTorrentsList.filter(
