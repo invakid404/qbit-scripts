@@ -19,7 +19,7 @@
   "dependencies": {
     "@oclif/core": "^1.19.1",
     "@oclif/plugin-help": "^5",
-    "@oclif/plugin-plugins": "^2.1.4",
+    "@oclif/plugin-plugins": "^2.1.5",
     "dayjs": "^1.11.6",
     "lodash": "^4.17.21"
   },
